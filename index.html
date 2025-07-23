@@ -1,1 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YYShop - 挑戰市場最低價</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', 'Microsoft JhengHei', sans-serif;
+      background: #0a0a0a;
+      color: white;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 50px 20px;
+    }
+
+    .main-title {
+      font-size: 3rem;
+      font-weight: 900;
+      text-align: center;
+      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #f5576c);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 40px;
+      color: #ffd700;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    .pricing-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 20px;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .service-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .service-icon {
+      width: 60px;
+      height: 60px;
+      margin-right: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .service-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .service-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .service-subtitle {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .pricing-option {
+      display: flex;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px 18px;
+      border-radius: 10px;
+      margin-top: 12px;
+    }
+
+    .option-type {
+      color: #ffd700;
+    }
+
+    .option-price {
+      font-weight: bold;
+      background: linear-gradient(45deg, #4facfe, #00f2fe);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .contact-section {
+      margin-top: 60px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .contact-section h3 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, #ffd700, #4facfe);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .line-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #00c300, #00e600);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    .line-button:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, #00e600, #00ff00);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="main-title">YYShop</h1>
+    <p class="subtitle">挑戰市場最低價</p>
+
+    <div class="pricing-grid">
+      <!-- Spotify -->
+      <div class="pricing-card">
+        <div class="service-header">
+          <div class="service-icon">
+            <img src="images/spotify-logo.png" alt="Spotify" class="service-logo" />
+          </div>
+          <div>
+            <div class="service-name">Spotify</div>
+            <div class="service-subtitle">音樂串流服務</div>
+          </div>
+        </div>
+        <div class="pricing-option"><span class="option-type">個人方案</span><span class="option-price">60/月</span></div>
+        <div class="pricing-option"><span class="option-type">年度方案</span><span class="option-price">600/年</span></div>
+      </div>
+
+      <!-- ChatGPT -->
+      <div class="pricing-card">
+        <div class="service-header">
+          <div class="service-icon">
+            <img src="images/chatgpt-logo.png" alt="ChatGPT" class="service-logo" />
+          </div>
+          <div>
+            <div class="service-name">ChatGPT</div>
+            <div class="service-subtitle">AI 助手服務</div>
+          </div>
+        </div>
+        <div class="pricing-option"><span class="option-type">Plus 方案</span><span class="option-price">350/月</span></div>
+      </div>
+
+      <!-- 你可以用同樣方式加上 Claude、YouTube、Discord -->
+    </div>
+
+    <div class="contact-section">
+      <h3>聯絡我們</h3>
+      <p>LINE ID: @966elyyr</p>
+      <a href="https://lin.ee/xYH5zLj" class="line-button" target="_blank">點我加 LINE</a>
+    </div>
+  </div>
+</body>
+</html>
 
