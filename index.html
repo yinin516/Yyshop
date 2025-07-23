@@ -111,10 +111,10 @@
         50% { background-position: 100% 50%; }
     }
 
-    /* 價格卡片網格 */
+    /* 價格卡片網格 - 3x2 布局 */
     .pricing-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
         gap: 40px;
         margin-bottom: 80px;
     }
@@ -409,6 +409,14 @@
         font-size: 0.95rem;
         margin-bottom: 8px;
     }
+
+    /* 響應式設計 */
+    @media (max-width: 1200px) {
+        .pricing-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
     @media (max-width: 768px) {
         .container {
             padding: 40px 20px;
@@ -628,8 +636,6 @@
             </div>
         </div>
     </div>
-
-    
 </div>
 ```
 
