@@ -1,192 +1,637 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YYShop - 挑戰市場最低價</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" />
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YYShop - 挑戰市場最低價</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+```
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Inter', 'Microsoft JhengHei', sans-serif;
-      background: #0a0a0a;
-      color: white;
-      line-height: 1.6;
+        font-family: 'Inter', 'Microsoft JhengHei', sans-serif;
+        background: #0a0a0a;
+        color: white;
+        overflow-x: hidden;
+        line-height: 1.6;
+    }
+
+    /* 動態背景 */
+    .bg-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #533483);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+    }
+
+    .bg-animation::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+            radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+        animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
     }
 
     .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 50px 20px;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 60px 30px;
+        position: relative;
+    }
+
+    /* 頭部區域 */
+    .header {
+        text-align: center;
+        margin-bottom: 80px;
+        position: relative;
     }
 
     .main-title {
-      font-size: 3rem;
-      font-weight: 900;
-      text-align: center;
-      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #f5576c);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
+        font-size: clamp(3rem, 8vw, 6rem);
+        font-weight: 900;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientMove 8s ease infinite;
+        margin-bottom: 20px;
+        text-shadow: 0 0 50px rgba(102, 126, 234, 0.5);
+        letter-spacing: -2px;
     }
 
     .subtitle {
-      text-align: center;
-      font-size: 1.5rem;
-      margin-bottom: 40px;
-      color: #ffd700;
+        font-size: clamp(1.2rem, 4vw, 2.5rem);
+        font-weight: 600;
+        background: linear-gradient(45deg, #ffd700, #ffed4a, #f093fb);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 30px;
     }
 
+    .header-description {
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.7);
+        max-width: 600px;
+        margin: 0 auto;
+        font-weight: 300;
+    }
+
+    @keyframes gradientMove {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+
+    /* 價格卡片網格 */
     .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 40px;
+        margin-bottom: 80px;
     }
 
     .pricing-card {
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 20px;
-      padding: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
+        position: relative;
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+    }
+
+    .pricing-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+    }
+
+    .pricing-card:hover {
+        transform: translateY(-15px) scale(1.02);
+        box-shadow: 
+            0 25px 50px rgba(0, 0, 0, 0.3),
+            0 0 100px rgba(102, 126, 234, 0.2);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .pricing-card:hover::before {
+        opacity: 1;
     }
 
     .service-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        position: relative;
     }
 
     .service-icon {
-      width: 60px;
-      height: 60px;
-      margin-right: 20px;
-      border-radius: 12px;
-      overflow: hidden;
-      background: rgba(255,255,255,0.05);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+        width: 80px;
+        height: 80px;
+        margin-right: 25px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: all 0.3s ease;
     }
 
-    .service-logo {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+    .service-icon::after {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        border-radius: 22px;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: -1;
+    }
+
+    .pricing-card:hover .service-icon::after {
+        opacity: 1;
+    }
+
+    .spotify-icon {
+        background: linear-gradient(135deg, #1db954, #1ed760);
+        box-shadow: 0 10px 30px rgba(29, 185, 84, 0.3);
+    }
+
+    .chatgpt-icon {
+        background: linear-gradient(135deg, #10a37f, #1a7f64);
+        box-shadow: 0 10px 30px rgba(16, 163, 127, 0.3);
+    }
+
+    .claude-icon {
+        background: linear-gradient(135deg, #cc785c, #d4926f);
+        box-shadow: 0 10px 30px rgba(204, 120, 92, 0.3);
+    }
+
+    .youtube-icon {
+        background: linear-gradient(135deg, #ff0000, #ff4444);
+        box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+    }
+
+    .discord-icon {
+        background: linear-gradient(135deg, #5865f2, #7983f5);
+        box-shadow: 0 10px 30px rgba(88, 101, 242, 0.3);
+    }
+
+    .service-info {
+        flex: 1;
     }
 
     .service-name {
-      font-size: 1.5rem;
-      font-weight: 700;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 5px;
     }
 
     .service-subtitle {
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.7);
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 400;
+    }
+
+    .pricing-options {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
 
     .pricing-option {
-      display: flex;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 12px 18px;
-      border-radius: 10px;
-      margin-top: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 20px 25px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .pricing-option::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .pricing-option:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: translateX(5px);
+    }
+
+    .pricing-option:hover::before {
+        left: 100%;
     }
 
     .option-type {
-      color: #ffd700;
+        font-weight: 600;
+        color: #ffd700;
+        font-size: 1.1rem;
     }
 
     .option-price {
-      font-weight: bold;
-      background: linear-gradient(45deg, #4facfe, #00f2fe);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+        font-size: 1.4rem;
+        font-weight: 800;
+        background: linear-gradient(45deg, #4facfe, #00f2fe);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
+    .special-note {
+        margin-top: 25px;
+        padding: 20px 25px;
+        background: rgba(255, 107, 107, 0.1);
+        border-radius: 16px;
+        border-left: 4px solid #ff6b6b;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.9);
+        position: relative;
+    }
+
+    .special-note::before {
+        content: '⚠️';
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 1.2rem;
+    }
+
+    /* 聯絡區域 */
     .contact-section {
-      margin-top: 60px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 30px;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.1);
+        text-align: center;
+        padding: 60px 40px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 30px;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
     }
 
-    .contact-section h3 {
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-      background: linear-gradient(45deg, #ffd700, #4facfe);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .contact-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    .contact-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 30px;
+        background: linear-gradient(45deg, #ffd700, #ffed4a, #4facfe);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+        z-index: 1;
+    }
+
+    .contact-methods {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .contact-method {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 30px 25px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .contact-method:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .contact-method h4 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        color: #4facfe;
+    }
+
+    .contact-method p {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 500;
     }
 
     .line-button {
-      display: inline-block;
-      background: linear-gradient(135deg, #00c300, #00e600);
-      color: white;
-      padding: 12px 20px;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1rem;
-      margin-top: 10px;
-      transition: 0.3s;
+        display: inline-block;
+        background: linear-gradient(135deg, #00c300, #00e600);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin-top: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 195, 0, 0.3);
     }
 
     .line-button:hover {
-      transform: translateY(-2px);
-      background: linear-gradient(135deg, #00e600, #00ff00);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 195, 0, 0.4);
+        background: linear-gradient(135deg, #00e600, #00ff00);
     }
-  </style>
+
+    .line-id {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+    }
+    @media (max-width: 768px) {
+        .container {
+            padding: 40px 20px;
+        }
+        
+        .pricing-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        .pricing-card {
+            padding: 30px 25px;
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .contact-methods {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* 載入動畫 */
+    .pricing-card {
+        opacity: 0;
+        transform: translateY(50px);
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .pricing-card:nth-child(1) { animation-delay: 0.1s; }
+    .pricing-card:nth-child(2) { animation-delay: 0.2s; }
+    .pricing-card:nth-child(3) { animation-delay: 0.3s; }
+    .pricing-card:nth-child(4) { animation-delay: 0.4s; }
+    .pricing-card:nth-child(5) { animation-delay: 0.5s; }
+    .pricing-card:nth-child(6) { animation-delay: 0.6s; }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+```
+
 </head>
 <body>
-  <div class="container">
-    <h1 class="main-title">YYShop</h1>
-    <p class="subtitle">挑戰市場最低價</p>
+    <div class="bg-animation"></div>
+
+```
+<div class="container">
+    <div class="header">
+        <h1 class="main-title">YYShop</h1>
+        <h2 class="subtitle">挑戰市場最低價</h2>
+        <p class="header-description">提供最優惠的訂閱服務價格，讓您以最划算的方式享受頂級數位體驗</p>
+    </div>
 
     <div class="pricing-grid">
-      <!-- Spotify -->
-      <div class="pricing-card">
-        <div class="service-header">
-          <div class="service-icon">
-            <img src="images/spotify-logo.png" alt="Spotify" class="service-logo" />
-          </div>
-          <div>
-            <div class="service-name">Spotify</div>
-            <div class="service-subtitle">音樂串流服務</div>
-          </div>
+        <!-- Spotify -->
+        <div class="pricing-card">
+            <div class="service-header">
+                <div class="service-icon spotify-icon"></div>
+                <div class="service-info">
+                    <div class="service-name">Spotify</div>
+                    <div class="service-subtitle">音樂串流服務</div>
+                </div>
+            </div>
+            <div class="pricing-options">
+                <div class="pricing-option">
+                    <span class="option-type">個人方案</span>
+                    <span class="option-price">60/月</span>
+                </div>
+                <div class="pricing-option">
+                    <span class="option-type">年度方案</span>
+                    <span class="option-price">600/年</span>
+                </div>
+            </div>
         </div>
-        <div class="pricing-option"><span class="option-type">個人方案</span><span class="option-price">60/月</span></div>
-        <div class="pricing-option"><span class="option-type">年度方案</span><span class="option-price">600/年</span></div>
-      </div>
 
-      <!-- ChatGPT -->
-      <div class="pricing-card">
-        <div class="service-header">
-          <div class="service-icon">
-            <img src="images/chatgpt-logo.png" alt="ChatGPT" class="service-logo" />
-          </div>
-          <div>
-            <div class="service-name">ChatGPT</div>
-            <div class="service-subtitle">AI 助手服務</div>
-          </div>
+        <!-- ChatGPT -->
+        <div class="pricing-card">
+            <div class="service-header">
+                <div class="service-icon chatgpt-icon"></div>
+                <div class="service-info">
+                    <div class="service-name">ChatGPT</div>
+                    <div class="service-subtitle">AI 助手服務</div>
+                </div>
+            </div>
+            <div class="pricing-options">
+                <div class="pricing-option">
+                    <span class="option-type">Plus 方案</span>
+                    <span class="option-price">350/月</span>
+                </div>
+            </div>
         </div>
-        <div class="pricing-option"><span class="option-type">Plus 方案</span><span class="option-price">350/月</span></div>
-      </div>
 
-      <!-- 你可以用同樣方式加上 Claude、YouTube、Discord -->
+        <!-- Claude -->
+        <div class="pricing-card">
+            <div class="service-header">
+                <div class="service-icon claude-icon"></div>
+                <div class="service-info">
+                    <div class="service-name">Claude</div>
+                    <div class="service-subtitle">AI 助手服務</div>
+                </div>
+            </div>
+            <div class="pricing-options">
+                <div class="pricing-option">
+                    <span class="option-type">Pro 方案</span>
+                    <span class="option-price">450/月</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- YouTube Premium -->
+        <div class="pricing-card">
+            <div class="service-header">
+                <div class="service-icon youtube-icon"></div>
+                <div class="service-info">
+                    <div class="service-name">YouTube Premium</div>
+                    <div class="service-subtitle">無廣告影音體驗</div>
+                </div>
+            </div>
+            <div class="pricing-options">
+                <div class="pricing-option">
+                    <span class="option-type">家庭月方案</span>
+                    <span class="option-price">70/月</span>
+                </div>
+                <div class="pricing-option">
+                    <span class="option-type">家庭半年方案</span>
+                    <span class="option-price">360/半年</span>
+                </div>
+                <div class="pricing-option">
+                    <span class="option-type">家庭年方案</span>
+                    <span class="option-price">600/年</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Discord Nitro -->
+        <div class="pricing-card">
+            <div class="service-header">
+                <div class="service-icon discord-icon"></div>
+                <div class="service-info">
+                    <div class="service-name">Discord Nitro</div>
+                    <div class="service-subtitle">進階聊天功能</div>
+                </div>
+            </div>
+            <div class="pricing-options">
+                <div class="pricing-option">
+                    <span class="option-type">月方案</span>
+                    <span class="option-price">150/月</span>
+                </div>
+                <div class="pricing-option">
+                    <span class="option-type">年方案</span>
+                    <span class="option-price">1200/年</span>
+                </div>
+            </div>
+            <div class="special-note">
+                <strong>有在頭像框代購</strong><br>
+                歡迎私訊詳細詢問
+            </div>
+        </div>
+
+        <!-- 永久 Spotify Premium -->
+        <div class="pricing-card">
+            <div class="service-header">
+                <div class="service-icon spotify-icon"></div>
+                <div class="service-info">
+                    <div class="service-name">永久 Spotify Premium</div>
+                    <div class="service-subtitle">一次付費終身使用</div>
+                </div>
+            </div>
+            <div class="pricing-options">
+                <div class="pricing-option">
+                    <span class="option-type">終身方案</span>
+                    <span class="option-price">2640</span>
+                </div>
+            </div>
+            <div class="special-note">
+                <strong>重要提醒：</strong><br>
+                • 有可能會掉會員<br>
+                • 如果掉了會在72小時內處理<br>
+                • 若無法處理將全額退款<br>
+                • 需提供帳密 且帳密不可更改<br>
+                • 解釋權最終歸本店所有
+            </div>
+        </div>
     </div>
 
     <div class="contact-section">
-      <h3>聯絡我們</h3>
-      <p>LINE ID: @966elyyr</p>
-      <a href="https://lin.ee/xYH5zLj" class="line-button" target="_blank">點我加 LINE</a>
+        <h3 class="contact-title">付款方式</h3>
+        <div class="contact-methods">
+            <div class="contact-method">
+                <h4>🎮 8591 交易</h4>
+                <p>手續費 +15 實收</p>
+            </div>
+            <div class="contact-method">
+                <h4>💰 USDT 錢包</h4>
+                <p>虛擬貨幣支付</p>
+            </div>
+            <div class="contact-method">
+                <h4>🏦 台幣錢包</h4>
+                <p>銀行轉帳付款</p>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <div class="contact-section" style="margin-top: 40px;">
+        <h3 class="contact-title">聯絡我們</h3>
+        <div class="contact-methods">
+            <div class="contact-method">
+                <h4>📱 官方 LINE</h4>
+                <p class="line-id">LINE ID: @966elyyr</p>
+                <a href="https://lin.ee/xYH5zLj" target="_blank" class="line-button">點擊直接加官方 LINE</a>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+```
+
 </body>
 </html>
-
